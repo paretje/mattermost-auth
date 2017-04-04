@@ -14,7 +14,7 @@ class CookieVisitor(object):
         self.browser = browser
         self.token = None
 
-    def Visit(self, cookie, count, total, delete):
+    def Visit(self, cookie, count, total, delete_cookie_out):
         if cookie.GetName() == 'MMAUTHTOKEN':
             self.token = cookie.GetValue()
             self.browser.CloseBrowser()
@@ -25,7 +25,7 @@ class CookieVisitor(object):
 
 class Handler(object):
 
-    def GetCookieManager(self, browser, url):
+    def GetCookieManager(self, browser, main_url):
         if not browser.GetUserData("cookieManager"):
             browser.SetUserData("cookieManager", cef.CookieManager.CreateManager(
                 os.path.join(os.path.expanduser('~'), '.mmauthcookies')))
